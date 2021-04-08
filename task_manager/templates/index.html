@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Task Master</title>
+{% endblock %}
+
+{% block body %}
+    <div class="content mt-5 table-responsive">
+        {% if tasks|length < 1 %}
+        <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+        {% else %}
+        <table class="text-center table table-bordered table-striped">
+            <tr>
+                <th>Task</th>
+                <th>Added</th>
+                <th>Actions</th>
+            </tr>
+            <!--style="background-color: #f44336; color: white; padding: 5px 10px; text-align: center; text-decoration: none; display: inline-block;"-->
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.content }}</td>
+                    <td>{{ task.date_created.date() }}</td>
+                    <td>
+                        <a class="rounded btn btn-danger me-2 mb-1" href="/delete/{{task.id}}" role="button">Delete</a>
+                        <br>
+                        <a class="rounded btn btn-warning me-2" href="/update/{{task.id}}" role="button">Update</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        <div class="form">
+            <form action="/" method="POST">
+                <div class="d-flex justify-content-center">
+                    <input class="border border-success rounded form-control input-lg" type="text" name="content" id="content">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input class="mt-3 btn btn-primary text-uppercase" type="submit" value="Add Task" style="box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
